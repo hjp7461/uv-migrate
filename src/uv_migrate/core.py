@@ -52,12 +52,12 @@ def migrate_dependencies(poetry_config: dict[str, Any]) -> dict[str, Any]:
     }
 
     # Helper to convert poetry dependency to PEP 508 string
-    def convert_dep(name: str, version_spec: Any) -> str:
+    def convert_dep(dep_name: str, version_spec: Any) -> str:
         if isinstance(version_spec, str):
             # Simple conversion ^3.10 -> >=3.10
             if version_spec.startswith("^") or version_spec.startswith("~"):
-                return f"{name}>={version_spec[1:]}"
-            return f"{name}{version_spec}"
+                return f"{dep_name}>={version_spec[1:]}"
+            return f"{dep_name}{version_spec}"
         if isinstance(version_spec, dict):
             # Handle complex dependencies like {version = "^2.0", extras = ["ssh"]}
             v = version_spec.get("version", "")
@@ -67,8 +67,8 @@ def migrate_dependencies(poetry_config: dict[str, Any]) -> dict[str, Any]:
             extras = version_spec.get("extras", [])
             extras_str = f"[{','.join(extras)}]" if extras else ""
 
-            return f"{name}{extras_str}{v}"
-        return name
+            return f"{dep_name}{extras_str}{v}"
+        return dep_name
 
     # project.dependencies (tool.poetry.dependencies)
     deps = poetry.get("dependencies", {})

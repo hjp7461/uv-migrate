@@ -264,7 +264,7 @@ wheels = [
 ]
 
 [[package]]
-name = "uv-migrage"
+name = "uv-migrate"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
