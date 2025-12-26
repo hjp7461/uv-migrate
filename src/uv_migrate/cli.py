@@ -5,7 +5,7 @@ from typing import Annotated
 import tomlkit
 import typer
 
-from uv_migrate.core import migrate_pyproject
+from .core import migrate_pyproject
 
 app = typer.Typer(help="Poetry to uv Migration Tool")
 
@@ -28,6 +28,18 @@ def migrate(
     """
     if not input_file.exists():
         typer.echo(f"Error: {input_file} does not exist.", err=True)
+        raise typer.Exit(code=1)
+
+    # Prevent migrating this project's own pyproject.toml
+    own_pyproject = (
+        Path(__file__).resolve().parent.parent.parent / "pyproject.toml"
+    ).resolve()
+    if input_file.resolve() == own_pyproject:
+        typer.echo(
+            "Error: Modifying the pyproject.toml of the uv-migrate project itself "
+            "is not allowed.",
+            err=True,
+        )
         raise typer.Exit(code=1)
 
     # 3.2 Validate input file

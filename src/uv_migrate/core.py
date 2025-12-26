@@ -117,7 +117,7 @@ def migrate_scripts_and_build(poetry_config: dict[str, Any]) -> dict[str, Any]:
             if name and url:
                 uv_sources[name] = {"url": url}
         if uv_sources:
-            results["uv_sources"] = uv_sources
+            results["uv-sources"] = uv_sources
 
     return results
 
@@ -148,7 +148,7 @@ def migrate_pyproject(input_path: Path) -> tomlkit.TOMLDocument:
 
     new_doc["build-system"] = extra_configs["build-system"]
 
-    if "uv_sources" in extra_configs:
+    if "uv-sources" in extra_configs:
         if "tool" not in new_doc:
             new_doc["tool"] = tomlkit.table()
         tool = new_doc["tool"]
@@ -156,6 +156,6 @@ def migrate_pyproject(input_path: Path) -> tomlkit.TOMLDocument:
             tool["uv"] = tomlkit.table()
             uv = tool["uv"]
             if isinstance(uv, Table):
-                uv["sources"] = extra_configs["uv_sources"]
+                uv["sources"] = extra_configs["uv-sources"]
 
     return new_doc

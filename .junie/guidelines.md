@@ -78,3 +78,4 @@ The project enforces strict code style and type checking using `ruff` and `mypy`
 1. Use `src/` directory for all source code.
 2. Maintain PEP 621 compliance for the project's own `pyproject.toml`.
 3. When modifying core logic in `src/uv_migrate/core.py`, ensure that all existing tests pass and add new ones if necessary.
+4. **Safety Guard**: The tool is designed to prevent accidental modification of its own `pyproject.toml`. When testing the CLI, always use a sample `pyproject.toml` or specify an output path to avoid errors.

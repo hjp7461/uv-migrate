@@ -17,12 +17,12 @@ uv tool install .
 ```
 
 ### 사용법
-기본적으로 현재 디렉토리의 `pyproject.toml`을 변환합니다.
+변환할 Poetry `pyproject.toml` 파일의 경로를 인자로 전달합니다.
 ```bash
-uv-migrate
+uv-migrate path/to/pyproject.toml
 ```
 
-특정 파일을 지정하거나 출력을 별도로 저장할 수 있습니다.
+출력 파일을 별도로 지정할 수 있습니다.
 ```bash
 uv-migrate path/to/pyproject.toml --output new_pyproject.toml
 ```
